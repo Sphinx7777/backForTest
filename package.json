@@ -1,0 +1,23 @@
+{
+  "name": "backfortest",
+  "version": "1.0.0",
+  "description": "\"first project\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sphinx7777/backForTest.git"
+  },
+  "keywords": [
+    "first",
+    "backForTest"
+  ],
+  "author": "Onishenko C.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sphinx7777/backForTest/issues"
+  },
+  "homepage": "https://github.com/Sphinx7777/backForTest#readme"
+}
