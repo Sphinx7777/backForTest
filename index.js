@@ -1,23 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./mongoDB/config');
 
 const app = express();
-
 app.use(bodyParser.json());
 
 
-
-mongoose.connect('mongodb+srv://free:1q2w3e4r@cluster0-r6cob.mongodb.net/free',{
-	useNewUrlParser: true
+mongoose.connect(config.mongoUrl,{
+	useNewUrlParser: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
 })
-	.then(() => app.listen(3080, () => console.log('server has started ...')))
+	.then(() => app.listen(config.PORT, () => console.log(`server has started on  ${config.PORT} port...`)))
 	.catch((err) => console.error(err));
 
 const Product = mongoose.model('Product', {
 	id: Number,
 	name: String,
-	price: Number
+	age: Number
 });
 
 app.get(
