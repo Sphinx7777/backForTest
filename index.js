@@ -4,46 +4,22 @@ const bodyParser = require('body-parser');
 const config = require('./mongoDB/config');
 
 const app = express();
+const {mongoDbUrl,PORT} = config;
+
 app.use(bodyParser.json());
+app.use('/shop',require('./mongoDB/api'));
 
+const Start = async () => {
+	try {
+		await mongoose.connect(mongoDbUrl, {
+			useNewUrlParser: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		});
+		app.listen(PORT, () => console.log(`server has started on  ${PORT} port...`))
+	}catch (err) {
+		console.warn(`Some error start ${err.message}`)
+	}
+};
 
-mongoose.connect(config.mongoUrl,{
-	useNewUrlParser: true,
-	useFindAndModify: false,
-	useUnifiedTopology: true
-})
-	.then(() => app.listen(config.PORT, () => console.log(`server has started on  ${config.PORT} port...`)))
-	.catch((err) => console.error(err));
-
-const Product = mongoose.model('Product', {
-	id: Number,
-	name: String,
-	age: Number
-});
-
-app.get(
-	'/products', (req, res) => Product.find()
-		.exec()
-		.then(products => res.json(products))
-);
-
-app.post(
-	'/products', (req, res) => {
-	Product.create(req.body)
-		.then(createdProduct => res.json(createdProduct));
-});
-
-app.put(
-	'/products/:id',(req,res)=>{
-	Product.findOneAndUpdate({id: req.params.id},req.body)
-		.exec()
-		.then(updateProduct => res.json(updateProduct))
-});
-
-app.delete(
-	'/products/:id',(req,res)=>{
-	Product.deleteOne({id: req.params.id})
-		.exec()
-		.then(() => res.json({delete: true}))
-});
-
+Start();
