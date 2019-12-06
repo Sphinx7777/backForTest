@@ -2,11 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./mongoDB/config');
+const cors = require('cors');
+
+
 
 
 const app = express();
 const {mongoDbUrl,PORT} = config;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/shop',require('./mongoDB/api'));
 
